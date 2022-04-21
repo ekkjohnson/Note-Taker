@@ -11,32 +11,45 @@ app.use('/', htmlRoutes);
 app.use(express.static('public'));
 app.listen(PORT, () => console.log(`Listening on PORT: PORT`));
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
-
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/index.html'))
-);
-
-app.get('/notes', (req, res)=>{
-    res.sendFile(path.join(__dirname,'/public/notes.html'))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'))
 });
 
-app.get('/api/notes', (req, res)=>{
-    console.info(`${req.method} request received for adding note`);
-    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
-});
+// app.get('/', (req, res) =>
+//   res.sendFile(path.join(__dirname, '/public/index.html'))
+// );
 
-app.post('/api/notes', (req, res)=>{
-    console.log(`${req.method} request received to save a note`)
-    const { title, text } = req.body;
-    if (req.body) {
-        const newNote = {
-          title,
-          text,
-        };
-        readAndAppend(newNote, './db/db.json');
-        res.json('Note added');
-    } else{
-        res.error ('error in adding your note')
-    }
+// app.get('/notes', (req, res)=>{
+//     res.sendFile(path.join(__dirname,'/public/notes.html'))
+// });
 
-});
+// app.get('/api/notes', (req, res)=>{
+//     console.info(`${req.method} request received for adding note`);
+//     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+// });
+
+// app.post('/api/notes', (req, res)=>{
+//     console.log(`${req.method} request received to save a note`)
+//     const { title, text } = req.body;
+//     if (req.body) {
+//         const newNote = {
+//           title,
+//           text,
+//         };
+//         readAndAppend(newNote, './db/db.json');
+//         res.json('Note added');
+//     } else{
+//         res.error ('error in adding your note')
+//     }
+
+
+// fs.writeFileSync(path.join(__dirname, '/db/db.json'), JSON.stringify(parseNote), "utf-8");
+//   res.json();
+//   console.log(`${req.method} request received to save a note`);
+// });
+
+// app.get('*', (req, res) =>
+//   res.sendFile(path.join(__dirname, '/public/index.html'))
+// );
+
+// app.listen(PORT, ()=> console.log(`Listening on PORT: http://localhost:${PORT}`));
