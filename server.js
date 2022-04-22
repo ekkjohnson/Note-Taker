@@ -27,21 +27,12 @@ app.get('/api/notes', (req, res)=>{
 });
 
 app.post('/api/notes', (req, res)=>{
-    console.log(`${req.method} saving note`)
-    const { title, text } = req.body;
-    if (req.body) {
-        const newNote = {
-          title,
-          text,
-        };
-        readAndAppend(newNote, './db/db.json');
-        res.json('Note added');
-    } else{
-        res.error ('error in note addtion')
-    }
+    const storeNote = fs.readFileSync(path.join(__dirname, '/db/db.json'), "utf-8");
+  const jsonparseNote = JSON.parse(storeNote);
+ let savedNote=req.body;
+  parseNote.push(savedNote)
 
-
-fs.writeFileSync(path.join(__dirname, '/db/db.json'), JSON.stringify(parseNote), "utf-8");
+fs.writeFileSync(path.join(__dirname, '/db/db.json'), JSON.stringify(jsonparseNote), "utf-8");
   res.json();
   console.log(`${req.method} request received to save your note`);
 });
