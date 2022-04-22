@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path')
 const apiRoutes = require('./routes/apiRoutes');
 const noteRoutes = require('./routes/noteRoute');
 const app = express();
@@ -12,7 +13,7 @@ app.use("/", noteRoutes)
 app.listen(PORT, () => console.log(`Listening on PORT: PORT`));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'))
+    res.sendFile(path.join(__dirname, './Develop/public/index.html'))
 });
 
 // app.get('/', (req, res) =>
