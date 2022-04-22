@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path')
+const fs = require('fs');
+
 // const apiRoutes = require('./routes/apiRoutes');
 // const noteRoutes = require('./routes/noteRoute');
 const app = express();
@@ -12,25 +14,17 @@ app.use(express.static('public'));
 // app.use("/", noteRoutes)
 
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/index.html'))
-});
-
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/index.html'))
-);
-
 app.get('/notes', (req, res)=>{
-    res.sendFile(path.join(__dirname,'/public/notes.html'))
+    res.sendFile(path.join(__dirname,'Develop/public/notes.html'))
 });
 
 app.get('/api/notes', (req, res)=>{
-    console.info(`${req.method} request received for adding note`);
+    console.info(`${req.method} note additon request`);
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 app.post('/api/notes', (req, res)=>{
-    console.log(`${req.method} request received to save a note`)
+    console.log(`${req.method} saving note`)
     const { title, text } = req.body;
     if (req.body) {
         const newNote = {
@@ -40,7 +34,7 @@ app.post('/api/notes', (req, res)=>{
         readAndAppend(newNote, './db/db.json');
         res.json('Note added');
     } else{
-        res.error ('error in adding your note')
+        res.error ('error in note addtion')
     }
 
 
@@ -50,7 +44,7 @@ fs.writeFileSync(path.join(__dirname, '/db/db.json'), JSON.stringify(parseNote),
 });
 
 app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/index.html'))
+  res.sendFile(path.join(__dirname, 'Develop/public/index.html'))
 );
 
 app.listen(PORT, () => console.log(`Listening on PORT: PORT`));
