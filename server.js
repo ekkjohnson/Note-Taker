@@ -19,8 +19,11 @@ app.get('/notes', (req, res)=>{
 });
 
 app.get('/api/notes', (req, res)=>{
+    const grabNote = fs.readFileSync(path.join(__dirname, './Develop/db/db.json'), "utf-8");
+  const jsonparseNote = JSON.parse(grabNote);
+  res.json(jsonparseNote)
     console.info(`${req.method} note additon request`);
-    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+ 
 });
 
 app.post('/api/notes', (req, res)=>{
@@ -40,7 +43,7 @@ app.post('/api/notes', (req, res)=>{
 
 fs.writeFileSync(path.join(__dirname, '/db/db.json'), JSON.stringify(parseNote), "utf-8");
   res.json();
-  console.log(`${req.method} request received to save a note`);
+  console.log(`${req.method} request received to save your note`);
 });
 
 app.get('*', (req, res) =>
